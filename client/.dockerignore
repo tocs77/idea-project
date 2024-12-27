@@ -1,0 +1,8 @@
+node_modules
+.storybook
+tests
+playwright-report
+.husky
+.loki
+Dockerfile
+docker-compose.yaml
