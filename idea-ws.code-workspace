@@ -1,12 +1,12 @@
 {
 	"folders": [
 		{
-			"name": "backend",
-			"path": "backend"
+			"name": "@idea/backend",
+			"path": "packages/backend"
 		},
 		{
-			"name": "client",
-			"path": "client"
+			"name": "@idea/client",
+			"path": "packages/client"
 		}
 	],
 	"settings": {}
