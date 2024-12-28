@@ -6,7 +6,7 @@ import { createBrowserRouter } from 'react-router';
 export const router = createBrowserRouter([
   { path: routes.getAllIdeasRoute(), element: <AllIdeasPage /> },
   {
-    path: routes.getViewIdeaRoute(':ideaNick'),
+    path: routes.getViewIdeaRoute({ ideaNick: ':ideaNick' }),
     element: <ViewIdeaPage />,
     index: true,
   },
