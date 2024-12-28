@@ -4,11 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run start  --parallel --ws ",
+    "check:types": "npm run check:types --ws",
+    "check": "npm run check: --ws",
+    "check:styles": "npm run check:styles  -w @idea/client",
+    "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
 }
