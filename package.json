@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "npm run start  --parallel --ws ",
     "check:types": "npm run check:types --ws",
-    "check": "npm run check: --ws",
-    "check:styles": "npm run check:styles  -w @idea/client",
+    "check": "npm run check --ws",
+    "check:style": "npm run check:style -w @idea/client",
+    "check:fix": "npm run check:fix --ws",
     "prepare": "husky"
   },
   "author": "",

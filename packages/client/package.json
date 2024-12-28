@@ -28,7 +28,7 @@
     "check": "biome check",
     "check:fix": "biome check --fix",
     "check:fix:unsafe": "biome check --fix --unsafe",
-    "check:style": "stylelint ./src/**/*.css",
+    "check:style": "stylelint ./src/**/*.{css,scss}",
     "check:style:fix": "stylelint ./src/**/*.css --fix",
     "test:commit": "jest --config ./config/jest/jest.config.ts",
     "storybook": "storybook dev -p 6006 --no-open",
