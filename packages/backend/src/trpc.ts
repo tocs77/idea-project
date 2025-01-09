@@ -1,18 +1,23 @@
 import { initTRPC } from '@trpc/server';
+import { times, pick } from 'lodash';
+import { z } from 'zod';
 
-const ideas = [
-  { nick: 'idea1', name: 'Super idea', description: 'Very interesting idea 1' },
-  { nick: 'idea2', name: 'Super idea2', description: 'Very interesting idea 2' },
-  { nick: 'idea3', name: 'Super idea3', description: 'Very interesting idea 3' },
-  { nick: 'idea4', name: 'Super idea4', description: 'Very interesting idea 4' },
-  { nick: 'idea5', name: 'Super idea5', description: 'Very interesting idea 5' },
-  { nick: 'idea6', name: 'Super idea6', description: 'Very interesting idea 6' },
-];
+const ideas = times(100, (i) => ({
+  nick: `cool-idea${i}`,
+  name: `Super idea${i}`,
+  description: `Very interesting idea ${i}`,
+  text: times(Math.floor(Math.random() * 100), (j) => `<p>Text paragraph ${j} of idea ${i}...</p>`).join(''),
+}));
 
 const trpc = initTRPC.create();
 export const trpcRouter = trpc.router({
   getIdeas: trpc.procedure.query(() => {
-    return ideas;
+    return ideas.map((idea) => pick(idea, ['nick', 'name', 'description']));
+  }),
+  getIdea: trpc.procedure.input(z.object({ ideaNick: z.string() })).query(({ input }) => {
+    const idea = ideas.find((idea) => idea.nick === input.ideaNick);
+
+    return idea || null;
   }),
 });
 

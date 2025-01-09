@@ -15,11 +15,14 @@
   "dependencies": {
     "@trpc/server": "^10.45.2",
     "express": "^4.21.2",
-    "typescript": "^5.7.2"
+    "lodash": "^4.17.21",
+    "typescript": "^5.7.2",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/express": "^5.0.0",
+    "@types/lodash": "^4.17.14",
     "@types/node": "^22.10.2",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.2"
