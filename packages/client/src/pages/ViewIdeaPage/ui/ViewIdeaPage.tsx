@@ -1,6 +1,9 @@
+import { useParams } from 'react-router';
+
 import { trpc } from '@/shared/lib';
 import { ViewIdeaRouteParams } from '@/shared/lib/routes';
-import { useParams } from 'react-router';
+
+import classes from './ViewIdeaPage.module.scss';
 
 export const ViewIdeaPage = () => {
   const { ideaNick } = useParams() as ViewIdeaRouteParams;
@@ -12,9 +15,9 @@ export const ViewIdeaPage = () => {
   if (!idea) return <div>Not found</div>;
   return (
     <div>
-      <h1>View Idea Page {idea.name}</h1>
-      <p>{idea.description}</p>
-      <p>{idea.text}</p>
+      <h1 className={classes.title}>View Idea Page {idea.name}</h1>
+      <p className={classes.ideaDescription}>{idea.description}</p>
+      <p className={classes.ideaText}>{idea.text}</p>
     </div>
   );
 };

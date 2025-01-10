@@ -1,0 +1,31 @@
+@import 'reset-css';
+@import './vars';
+@import './mixins';
+
+
+html,
+body,
+#root {
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+body {
+  font-family: $default-font-family;
+  font-size: $default-fontsize;
+  color: $default-text-color;
+  background-color: $default-background-color;
+  line-height: $default-line-height;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}

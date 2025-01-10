@@ -1,0 +1,61 @@
+@use '@/App/styles/mixins' as mixins;
+@use '@/App/styles/vars' as colors;
+
+$breakpoint: '<=900px';
+
+.Layout {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+
+  @include mixins.media($breakpoint) {
+    flex-flow: column nowrap;
+  }
+}
+
+.navigation {
+  height: 100%;
+  overflow: auto;
+  flex: 0 0 200px;
+  padding: 20px 30px;
+  border-right: 1px solid colors.$black;
+
+  @include mixins.media($breakpoint) {
+    overflow: visible;
+    flex: 0 0 auto;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid colors.$black;
+  }
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.menu {
+  .item {
+    &:not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+
+  .link {
+    @include mixins.link;
+  }
+}
+
+.content {
+  height: 100%;
+  overflow: auto;
+  flex: 1 1 100%;
+  padding: 20px 30px;
+
+  @include mixins.media($breakpoint) {
+    overflow: visible;
+    flex: 0 0 auto;
+    height: auto;
+  }
+}

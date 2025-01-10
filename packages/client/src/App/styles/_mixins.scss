@@ -1,0 +1,25 @@
+@import 'include-media';
+@import './vars';
+
+@mixin link($color: $blue, $hover-color: $red) {
+  color: $color;
+  transition: $color 0.3s ease;
+
+  &:hover,
+  &:active {
+    color: $hover-color;
+    transition: none;
+  }
+}
+
+@mixin h1 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+@mixin h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
