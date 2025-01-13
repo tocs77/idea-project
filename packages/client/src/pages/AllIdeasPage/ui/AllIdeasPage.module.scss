@@ -1,9 +1,6 @@
 @use '@/App/styles/mixins' as mixins;
 @use '@/App/styles/vars' as colors;
 
-.title {
-	@include mixins.h1;
-}
 
 .ideas {
 	.idea {
@@ -15,16 +12,10 @@
 			margin-top: 20px;
 		}
 
-		.ideaName {
-			@include mixins.h2;
-
-			.ideaLink {
-				@include mixins.link;
-			}
+		.ideaLink {
+			@include mixins.link;
 		}
+
 	}
 
-	.ideaDescription {
-		font-size: 18px;
-	}
 }

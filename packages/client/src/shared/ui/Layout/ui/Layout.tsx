@@ -1,5 +1,5 @@
 import { Link, Outlet } from 'react-router';
-import { getAllIdeasRoute } from '@/shared/lib/routes';
+import { routes } from '@/shared/lib';
 
 import classes from './Layout.module.scss';
 export const Layout = () => {
@@ -9,8 +9,13 @@ export const Layout = () => {
         <div className={classes.logo}>Idea NIck</div>
         <ul className={classes.menu}>
           <li className={classes.item}>
-            <Link to={getAllIdeasRoute()} className={classes.link}>
+            <Link to={routes.getAllIdeasRoute()} className={classes.link}>
               All Ideas
+            </Link>
+          </li>
+          <li className={classes.item}>
+            <Link to={routes.getNewIdeaRoute()} className={classes.link}>
+              Add Idea
             </Link>
           </li>
         </ul>

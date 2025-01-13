@@ -4,6 +4,7 @@ import { trpc } from '@/shared/lib';
 import { ViewIdeaRouteParams } from '@/shared/lib/routes';
 
 import classes from './ViewIdeaPage.module.scss';
+import { Segment } from '@/shared/ui/Segment';
 
 export const ViewIdeaPage = () => {
   const { ideaNick } = useParams() as ViewIdeaRouteParams;
@@ -14,10 +15,8 @@ export const ViewIdeaPage = () => {
   if (isError) return <div>{error.message}</div>;
   if (!idea) return <div>Not found</div>;
   return (
-    <div>
-      <h1 className={classes.title}>View Idea Page {idea.name}</h1>
-      <p className={classes.ideaDescription}>{idea.description}</p>
+    <Segment title={`Idea: ${idea.name}`} description={idea.description}>
       <p className={classes.ideaText}>{idea.text}</p>
-    </div>
+    </Segment>
   );
 };
