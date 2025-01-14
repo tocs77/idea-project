@@ -12,6 +12,7 @@
     "@trpc/server": "^10.45.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.1",
+    "formik": "^2.4.6",
     "i": "^0.3.7",
     "include-media": "^2.0.0",
     "npm": "^11.0.0",
