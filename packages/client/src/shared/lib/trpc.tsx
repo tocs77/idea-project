@@ -1,5 +1,5 @@
 import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
-import type { TrpcRouter } from '@idea/backend/src/trpc';
+import { TrpcRouter } from '@idea/backend/src/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PropsWithChildren } from 'react';
 
