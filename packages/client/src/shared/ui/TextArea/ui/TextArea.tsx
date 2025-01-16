@@ -18,6 +18,7 @@ export const Textarea = <T extends Record<keyof T, string>>(props: TextareaProps
       <label htmlFor={stringName}>{label}</label>
       <br />
       <textarea
+        disabled={formik.isSubmitting}
         onBlur={() => formik.setFieldTouched(stringName)}
         id={stringName}
         name={stringName}

@@ -19,6 +19,7 @@ export const Input = <T extends Record<keyof T, string>>(props: InputProps<T>) =
       <br />
       <input
         onBlur={() => formik.setFieldTouched(stringName)}
+        disabled={formik.isSubmitting}
         type='text'
         id={stringName}
         name={stringName}
