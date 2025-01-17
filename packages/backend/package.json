@@ -7,12 +7,15 @@
     "build": "rimraf ./build && tsc --outDir build ./src/server.ts",
     "check:types": "tsc --noEmit",
     "check": "biome check",
-    "check:fix": "biome check --fix"
+    "check:fix": "biome check --fix",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.2.1",
     "@trpc/server": "^10.45.2",
     "express": "^4.21.2",
     "lodash": "^4.17.21",
@@ -24,7 +27,11 @@
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.14",
     "@types/node": "^22.10.2",
+    "prisma": "^6.2.1",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.2"
+  },
+  "prisma": {
+    "schema": "./src/prisma/schema.prisma"
   }
 }
