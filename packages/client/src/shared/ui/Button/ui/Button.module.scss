@@ -1,0 +1,26 @@
+@use '@/App/styles/vars' as colors;
+
+.Button {
+  padding: 8px 15px;
+  color: colors.$white;
+  background-color: #0a980a;
+  border: none;
+  font-weight: bold;
+  border-radius: colors.$border-radius-small;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: #21b821;
+  }
+
+  &:active {
+    background-color: #39d039;
+  }
+
+  &.loading {
+    pointer-events: none;
+    background-color: #929292;
+    color: #d9d9d9;
+  }
+}

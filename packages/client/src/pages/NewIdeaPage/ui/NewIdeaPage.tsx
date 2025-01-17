@@ -9,6 +9,9 @@ import { ideaSchema } from '@idea/backend/src/types';
 import { Input } from '@/shared/ui/Input';
 import { Textarea } from '@/shared/ui/TextArea';
 import { trpc } from '@/shared/lib';
+import { Alert } from '@/shared/ui/Alert';
+import { Button } from '@/shared/ui/Button';
+import { FormItems } from '@/shared/ui/FormItems';
 
 export type IdeaState = z.infer<typeof ideaSchema>;
 export const NewIdeaPage = () => {
@@ -51,16 +54,16 @@ export const NewIdeaPage = () => {
           e.preventDefault();
           formik.submitForm();
         }}>
-        <Input formik={formik} label='Name' name='name' />
-        <Input formik={formik} name='nick' label='Nick' />
-        <Input formik={formik} name='description' label='Description' />
-        <Textarea formik={formik} label='Text' name={'text'} />
-        {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Form is invalid</div>}
-        {successMessageVisible && <div style={{ color: 'green' }}>Idea created successfully</div>}
-        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-        <button type='submit' disabled={formik.isSubmitting}>
-          {formik.isSubmitting ? 'Creating...' : 'Create idea'}
-        </button>
+        <FormItems>
+          <Input formik={formik} label='Name' name='name' />
+          <Input formik={formik} name='nick' label='Nick' />
+          <Input formik={formik} name='description' label='Description' maxWidth={500} />
+          <Textarea formik={formik} label='Text' name={'text'} />
+          {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Form is invalid</div>}
+          {successMessageVisible && <Alert color='green'>Idea created</Alert>}
+          {errorMessage && <Alert color='red'>{errorMessage}</Alert>}
+          <Button loading={formik.isSubmitting}>Create idea</Button>
+        </FormItems>
       </form>
     </Segment>
   );

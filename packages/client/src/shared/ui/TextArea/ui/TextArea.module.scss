@@ -1,0 +1,39 @@
+@use '@/App/styles/vars' as colors;
+
+.Textarea {
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  .label {
+    font-weight: bold;
+    margin-bottom: 2px;
+    display: block
+  }
+
+  .input {
+    min-height: 150px;
+    display: block;
+    padding: 7px;
+    border: 1px solid black;
+    border-radius: colors.$border-radius-small;
+    background-color: colors.$white;
+    outline: none;
+    width: 100%;
+    resize: vertical;
+
+    &:focus {
+      border-color: colors.$blue;
+    }
+
+    &.invalid {
+      border-color: colors.$red;
+    }
+  }
+
+  .error {
+    margin-top: 2px;
+    color: colors.$red;
+  }
+
+}
