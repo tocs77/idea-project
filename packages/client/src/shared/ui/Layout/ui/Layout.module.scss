@@ -8,6 +8,8 @@ $breakpoint: '<=900px';
   flex-flow: row nowrap;
   height: 100%;
 
+
+
   @include mixins.media($breakpoint) {
     flex-flow: column nowrap;
   }
@@ -29,6 +31,11 @@ $breakpoint: '<=900px';
   }
 }
 
+.active {
+  font-weight: bold;
+  border: 1px solid colors.$black;
+}
+
 .logo {
   font-weight: bold;
   font-size: 20px;
@@ -37,14 +44,19 @@ $breakpoint: '<=900px';
 
 .menu {
   .item {
+    font-size: 14px;
+
     &:not(:first-child) {
       margin-top: 5px;
     }
   }
 
   .link {
+    padding: 3px;
+
     @include mixins.link;
   }
+
 }
 
 .content {

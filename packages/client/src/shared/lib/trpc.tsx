@@ -1,7 +1,9 @@
-import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
-import { TrpcRouter } from '@idea/backend/src/router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PropsWithChildren } from 'react';
+import superjson from 'superjson';
+import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import { TrpcRouter } from '@idea/backend/src/router';
 
 export const trpc = createTRPCReact<TrpcRouter>();
 const queryClient = new QueryClient({
@@ -14,6 +16,7 @@ const queryClient = new QueryClient({
 });
 
 const trpcClient = trpc.createClient({
+  transformer: superjson,
   links: [
     httpBatchLink({
       url: '/trpc',

@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import { format } from 'date-fns';
 
 import { trpc } from '@/shared/lib';
 import { ViewIdeaRouteParams } from '@/shared/lib/routes';
@@ -16,6 +17,7 @@ export const ViewIdeaPage = () => {
   if (!idea) return <div>Not found</div>;
   return (
     <Segment title={`Idea: ${idea.name}`} description={idea.description}>
+      <div className={classes.createdAt}>{`Created at: ${format(idea.createdAt, 'dd.MM.yyyy')}`}</div>
       <p className={classes.ideaText}>{idea.text}</p>
     </Segment>
   );

@@ -5,6 +5,7 @@ import { ViewIdeaPage } from '@/pages/ViewIdeaPage';
 import { routes } from '@/shared/lib/routes';
 import { Layout } from '@/shared/ui/Layout';
 import { NewIdeaPage } from '@/pages/NewIdeaPage';
+import { SignupPage } from '@/pages/SignupPage';
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
         element: <ViewIdeaPage />,
         index: true,
       },
+      { path: routes.getSignupRoute(), element: <SignupPage /> },
     ],
   },
 ]);
