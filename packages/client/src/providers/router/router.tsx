@@ -7,6 +7,7 @@ import { Layout } from '@/shared/ui/Layout';
 import { NewIdeaPage } from '@/pages/NewIdeaPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { SigninPage } from '@/pages/SigninPage';
+import { SignOutPage } from '@/pages/SignOutPage';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       },
       { path: routes.getSignupRoute(), element: <SignupPage /> },
       { path: routes.getSigninRoute(), element: <SigninPage /> },
+      { path: routes.getSignOutRoute(), element: <SignOutPage /> },
     ],
   },
 ]);

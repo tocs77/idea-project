@@ -1,6 +1,6 @@
-import { trpc } from '../../lib';
+import { authedProcedure } from '../../lib';
 
-export const getIdeasTrpcRoute = trpc.procedure.query(async ({ ctx }) => {
+export const getIdeasTrpcRoute = authedProcedure.query(async ({ ctx }) => {
   const ideas = await ctx.prisma.idea.findMany({
     select: {
       id: true,

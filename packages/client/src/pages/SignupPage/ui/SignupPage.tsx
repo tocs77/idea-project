@@ -15,6 +15,7 @@ import { SignupState, signUpSchema } from '../model/types/SignupState';
 export const SignupPage = () => {
   const [submittingError, setSubmittingError] = useState('');
   const navigate = useNavigate();
+  const trpcUtils = trpc.useUtils();
   const signup = trpc.signUp.useMutation();
   const formik = useFormik<SignupState>({
     initialValues: {
@@ -28,6 +29,7 @@ export const SignupPage = () => {
       try {
         setSubmittingError('');
         await signup.mutateAsync(values);
+        trpcUtils.invalidate();
         navigate(routes.getAllIdeasRoute());
       } catch (error) {
         if (error instanceof Error) {

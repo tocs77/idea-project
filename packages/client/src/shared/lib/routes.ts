@@ -12,6 +12,7 @@ const getNewIdeaRoute = () => '/ideas/new';
 
 const getSignupRoute = () => '/sign-up';
 const getSigninRoute = () => '/sign-in';
+const getSignOutRoute = () => '/sign-out';
 
 export const routes = {
   getAllIdeasRoute,
@@ -19,4 +20,5 @@ export const routes = {
   getNewIdeaRoute,
   getSignupRoute,
   getSigninRoute,
+  getSignOutRoute,
 };

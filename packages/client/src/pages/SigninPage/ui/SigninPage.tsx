@@ -18,6 +18,7 @@ export const SigninPage = () => {
   const [submittingError, setSubmittingError] = useState('');
   const navigate = useNavigate();
   const signin = trpc.signIn.useMutation();
+  const trpcUtils = trpc.useUtils();
   const formik = useFormik<SigninState>({
     initialValues: {
       nick: '',
@@ -29,6 +30,7 @@ export const SigninPage = () => {
       try {
         setSubmittingError('');
         await signin.mutateAsync(values);
+        trpcUtils.invalidate();
         navigate(routes.getAllIdeasRoute());
       } catch (error) {
         if (error instanceof Error) {

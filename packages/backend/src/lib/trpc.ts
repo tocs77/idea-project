@@ -3,24 +3,38 @@ import superjson from 'superjson';
 import { AppContext } from './ctx';
 
 import { decodeJWT, verifyJWT } from '../utils/index';
+import { JwtPayload } from 'jsonwebtoken';
 
 const t = initTRPC.context<AppContext>().create({ transformer: superjson });
 
-t.middleware(async ({ ctx, next }) => {
+const authMiddleware = t.middleware(async ({ ctx, next }) => {
   const token = ctx.req.cookies.token;
-  console.log('token', token);
-  if (!token) return next();
-  if (!verifyJWT(token)) return next();
-  const id = decodeJWT(token) as string;
+  if (!token) {
+    ctx.me = undefined;
+    ctx.res.status(401);
+    throw new Error('Empty token');
+  }
+  if (!verifyJWT(token)) {
+    ctx.me = undefined;
+    ctx.res.status(401);
+    throw new Error('Invalid token');
+  }
+  const id = decodeJWT(token) as JwtPayload;
+  let user;
+  try {
+    user = await ctx.prisma.user.findUnique({
+      where: {
+        id: id.id,
+      },
+    });
+  } catch (error) {
+    console.log('error', error);
+  }
 
-  const user = await ctx.prisma.user.findUnique({
-    where: {
-      id: id,
-    },
-  });
   if (!user) return next();
   ctx.me = { id: user.id, nick: user.nick };
   return next();
 });
-
+export const publicProcedure = t.procedure;
+export const authedProcedure = publicProcedure.use(authMiddleware);
 export const trpc = t;

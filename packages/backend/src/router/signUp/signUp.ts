@@ -2,9 +2,9 @@ import { createHash } from 'crypto';
 
 import { signJWT } from '../../utils';
 import { signUpSchema } from '../../types';
-import { trpc } from '../../lib';
+import { publicProcedure } from '../../lib';
 
-export const signUpTrpcRoute = trpc.procedure.input(signUpSchema).mutation(async ({ ctx, input }) => {
+export const signUpTrpcRoute = publicProcedure.input(signUpSchema).mutation(async ({ ctx, input }) => {
   const user = await ctx.prisma.user.findUnique({
     where: {
       nick: input.nick,

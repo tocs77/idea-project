@@ -5,7 +5,12 @@ export const signJWT = (userId: string) => {
 };
 
 export const verifyJWT = (token: string) => {
-  return jwt.verify(token, process.env.JWT_SECRET as string);
+  try {
+    jwt.verify(token, process.env.JWT_SECRET as string);
+  } catch (_error) {
+    return false;
+  }
+  return true;
 };
 
 export const decodeJWT = (token: string) => {

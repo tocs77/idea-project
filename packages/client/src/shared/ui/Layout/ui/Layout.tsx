@@ -1,8 +1,11 @@
 import { NavLink, Outlet } from 'react-router';
-import { classNames, routes } from '@/shared/lib';
+
+import { classNames, routes, trpc } from '@/shared/lib';
 
 import classes from './Layout.module.scss';
 export const Layout = () => {
+  const { data: me, error } = trpc.getMe.useQuery();
+  const loggedIn = !!me && !error;
   return (
     <div className={classes.Layout}>
       <div className={classes.navigation}>
@@ -12,7 +15,6 @@ export const Layout = () => {
             <NavLink
               to={routes.getAllIdeasRoute()}
               className={({ isActive }) => {
-                console.log(isActive);
                 return classNames(classes.link, { [classes.active]: isActive });
               }}>
               All Ideas
@@ -25,20 +27,33 @@ export const Layout = () => {
               Add Idea
             </NavLink>
           </li>
-          <li className={classes.item}>
-            <NavLink
-              to={routes.getSignupRoute()}
-              className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
-              Sign Up
-            </NavLink>
-          </li>
-          <li className={classes.item}>
-            <NavLink
-              to={routes.getSigninRoute()}
-              className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
-              Sign In
-            </NavLink>
-          </li>
+          {!loggedIn && (
+            <>
+              <li className={classes.item}>
+                <NavLink
+                  to={routes.getSignupRoute()}
+                  className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
+                  Sign Up
+                </NavLink>
+              </li>
+              <li className={classes.item}>
+                <NavLink
+                  to={routes.getSigninRoute()}
+                  className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
+                  Sign In
+                </NavLink>
+              </li>
+            </>
+          )}
+          {loggedIn && (
+            <li className={classes.item}>
+              <NavLink
+                to={routes.getSignOutRoute()}
+                className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
+                Sign Out
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
       <div className={classes.content}>

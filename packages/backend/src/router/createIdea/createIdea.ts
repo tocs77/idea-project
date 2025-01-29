@@ -1,7 +1,7 @@
 import { ideaSchema } from '../../types';
-import { trpc } from '../../lib';
+import { authedProcedure } from '../../lib';
 
-export const createIdeaTrpcRoute = trpc.procedure.input(ideaSchema).mutation(async ({ ctx, input }) => {
+export const createIdeaTrpcRoute = authedProcedure.input(ideaSchema).mutation(async ({ ctx, input }) => {
   const idea = await ctx.prisma.idea.findUnique({
     where: {
       nick: input.nick,
