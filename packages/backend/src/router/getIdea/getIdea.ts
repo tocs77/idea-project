@@ -7,6 +7,14 @@ export const getIdeaTrpcRoute = authedProcedure.input(z.object({ ideaNick: z.str
     where: {
       nick: input.ideaNick,
     },
+    include: {
+      author: {
+        select: {
+          id: true,
+          nick: true,
+        },
+      },
+    },
   });
   return idea || null;
 });

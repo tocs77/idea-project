@@ -18,6 +18,7 @@ export const ViewIdeaPage = () => {
   return (
     <Segment title={`Idea: ${idea.name}`} description={idea.description}>
       <div className={classes.createdAt}>{`Created at: ${format(idea.createdAt, 'dd.MM.yyyy')}`}</div>
+      <div className={classes.author}>{`Author: ${idea.author.nick}`}</div>
       <p className={classes.ideaText}>{idea.text}</p>
     </Segment>
   );

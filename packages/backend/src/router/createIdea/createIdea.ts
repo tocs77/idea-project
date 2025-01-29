@@ -10,6 +10,9 @@ export const createIdeaTrpcRoute = authedProcedure.input(ideaSchema).mutation(as
   if (idea) {
     throw new Error('Idea with this nick already exists');
   }
+  if (!ctx.me) {
+    throw new Error('You are not logged in');
+  }
 
   const newIdea = await ctx.prisma.idea.create({
     data: {
@@ -17,6 +20,7 @@ export const createIdeaTrpcRoute = authedProcedure.input(ideaSchema).mutation(as
       nick: input.nick,
       description: input.description,
       text: input.text,
+      authorId: ctx.me.id,
     },
   });
 
