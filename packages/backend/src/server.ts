@@ -4,6 +4,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 
 import { trpcRouter } from '@/router';
 import { createAppContext, AppContext } from './lib/ctx';
+import { env } from './lib/env';
 
 const init = async () => {
   let ctx: AppContext | null = null;
@@ -23,8 +24,8 @@ const init = async () => {
       }),
     );
 
-    app.listen(5000, () => {
-      console.log('Server started on port 5000');
+    app.listen(env.PORT, () => {
+      console.log(`Server started on port ${env.PORT}`);
     });
   } catch (error) {
     await ctx?.stop();

@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
+import { env } from '../lib';
 
 export const signJWT = (userId: string) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET as string);
+  return jwt.sign({ id: userId }, env.JWT_SECRET);
 };
 
 export const verifyJWT = (token: string) => {
   try {
-    jwt.verify(token, process.env.JWT_SECRET as string);
+    jwt.verify(token, env.JWT_SECRET);
   } catch (_error) {
     return false;
   }

@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 
 import { signJWT } from '../../utils';
 import { signUpSchema } from '../../types';
-import { publicProcedure } from '../../lib';
+import { publicProcedure, env } from '../../lib';
 
 export const signUpTrpcRoute = publicProcedure.input(signUpSchema).mutation(async ({ ctx, input }) => {
   const user = await ctx.prisma.user.findUnique({
@@ -17,9 +17,10 @@ export const signUpTrpcRoute = publicProcedure.input(signUpSchema).mutation(asyn
   const newUser = await ctx.prisma.user.create({
     data: {
       nick: input.nick,
-      password: createHash('sha256').update(input.password).digest('hex'),
+      password: createHash('sha256').update(`${env.PASSWORD_SALT}${input.password}`).digest('hex'),
     },
   });
   const token = signJWT(newUser.id);
-  return token;
+  ctx.res.cookie('token', token, { httpOnly: true });
+  return true;
 });
