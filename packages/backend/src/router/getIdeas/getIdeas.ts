@@ -1,7 +1,6 @@
 import { trpc } from '../../lib';
 
 export const getIdeasTrpcRoute = trpc.procedure.query(async ({ ctx }) => {
-  // return ideas.map((idea) => pick(idea, ['nick', 'name', 'description']));
   const ideas = await ctx.prisma.idea.findMany({
     select: {
       id: true,
@@ -13,5 +12,7 @@ export const getIdeasTrpcRoute = trpc.procedure.query(async ({ ctx }) => {
       createdAt: 'desc',
     },
   });
+  const token = ctx.req.cookies.token;
+  console.log('token', token);
   return ideas;
 });

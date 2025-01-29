@@ -32,6 +32,13 @@ export const Layout = () => {
               Sign Up
             </NavLink>
           </li>
+          <li className={classes.item}>
+            <NavLink
+              to={routes.getSigninRoute()}
+              className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
+              Sign In
+            </NavLink>
+          </li>
         </ul>
       </div>
       <div className={classes.content}>

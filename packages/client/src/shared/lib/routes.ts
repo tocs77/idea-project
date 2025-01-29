@@ -11,10 +11,12 @@ const getViewIdeaRoute = ({ ideaNick }: ViewIdeaRouteParams) => `/ideas/${ideaNi
 const getNewIdeaRoute = () => '/ideas/new';
 
 const getSignupRoute = () => '/sign-up';
+const getSigninRoute = () => '/sign-in';
 
 export const routes = {
   getAllIdeasRoute,
   getViewIdeaRoute,
   getNewIdeaRoute,
   getSignupRoute,
+  getSigninRoute,
 };

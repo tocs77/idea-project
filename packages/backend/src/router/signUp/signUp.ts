@@ -1,9 +1,11 @@
 import { createHash } from 'crypto';
+
+import { signJWT } from '../../utils';
 import { signUpSchema } from '../../types';
 import { trpc } from '../../lib';
 
 export const signUpTrpcRoute = trpc.procedure.input(signUpSchema).mutation(async ({ ctx, input }) => {
-  const user = await ctx.prisma.idea.findUnique({
+  const user = await ctx.prisma.user.findUnique({
     where: {
       nick: input.nick,
     },
@@ -18,6 +20,6 @@ export const signUpTrpcRoute = trpc.procedure.input(signUpSchema).mutation(async
       password: createHash('sha256').update(input.password).digest('hex'),
     },
   });
-
-  return newUser;
+  const token = signJWT(newUser.id);
+  return token;
 });
