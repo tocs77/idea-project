@@ -8,6 +8,7 @@ import { NewIdeaPage } from '@/pages/NewIdeaPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { SigninPage } from '@/pages/SigninPage';
 import { SignOutPage } from '@/pages/SignOutPage';
+import { EditIdeaPage } from '@/pages/EditIdeaPage';
 
 export const router = createBrowserRouter([
   {
@@ -17,9 +18,13 @@ export const router = createBrowserRouter([
       { path: routes.getNewIdeaRoute(), element: <NewIdeaPage /> },
       {
         path: routes.getViewIdeaRoute({ ideaNick: ':ideaNick' }),
-        element: <ViewIdeaPage />,
-        index: true,
+
+        children: [
+          { index: true, element: <ViewIdeaPage /> },
+          { path: 'edit', element: <EditIdeaPage /> },
+        ],
       },
+
       { path: routes.getSignupRoute(), element: <SignupPage /> },
       { path: routes.getSigninRoute(), element: <SigninPage /> },
       { path: routes.getSignOutRoute(), element: <SignOutPage /> },

@@ -12,3 +12,7 @@ export const ideaSchema = z.object({
     .min(100, 'Text must be at least 100 characters')
     .min(1, 'Text is required'),
 });
+
+export const updateIdeaSchema = ideaSchema.extend({
+  ideaId: z.string().min(1),
+});
