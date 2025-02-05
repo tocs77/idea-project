@@ -7,11 +7,12 @@ import { Segment } from '@/shared/ui/Segment';
 
 import classes from './ViewIdeaPage.module.scss';
 import { Button } from '@/shared/ui/Button';
+import { useMe } from '@/providers';
 
 export const ViewIdeaPage = () => {
   const { ideaNick } = useParams() as ViewIdeaRouteParams;
   const { data: idea, isLoading, isError, error } = trpc.getIdea.useQuery({ ideaNick });
-  const { data: me } = trpc.getMe.useQuery();
+  const me = useMe();
 
   if (isLoading) return <div>Loading...</div>;
 

@@ -1,12 +1,14 @@
 import { RouterProvider } from 'react-router';
-import { router } from '../providers/router/router';
+import { router, AppContextProvider } from '@/providers';
 import { TrpcProvider } from '@/shared/lib';
 import './styles/global.scss';
 
 export const App = () => {
   return (
     <TrpcProvider>
-      <RouterProvider router={router} />
+      <AppContextProvider>
+        <RouterProvider router={router} />
+      </AppContextProvider>
     </TrpcProvider>
   );
 };

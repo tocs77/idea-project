@@ -1,11 +1,12 @@
 import { NavLink, Outlet } from 'react-router';
 
-import { classNames, routes, trpc } from '@/shared/lib';
+import { classNames, routes } from '@/shared/lib';
 
 import classes from './Layout.module.scss';
+import { useMe } from '@/providers';
 export const Layout = () => {
-  const { data: me, error } = trpc.getMe.useQuery();
-  const loggedIn = !!me && !error;
+  const me = useMe();
+  const loggedIn = !!me;
   return (
     <div className={classes.Layout}>
       <div className={classes.navigation}>
