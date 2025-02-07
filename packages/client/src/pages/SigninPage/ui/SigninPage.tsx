@@ -1,7 +1,5 @@
-import { routes, trpc } from '@/shared/lib';
+import { trpc } from '@/shared/lib';
 import type { z } from 'zod';
-
-import { useNavigate } from 'react-router';
 
 import { signUpSchema } from '@idea/backend/src/types';
 import { Segment } from '@/shared/ui/Segment';
@@ -10,11 +8,11 @@ import { Input } from '@/shared/ui/Input';
 
 import { Button } from '@/shared/ui/Button';
 import { useForm } from '@/features/UseForm';
+import { withPageWrapper } from '@/features/PageWrapper';
 
 export type SigninState = z.infer<typeof signUpSchema>;
 
-export const SigninPage = () => {
-  const navigate = useNavigate();
+const SigninPageInner = () => {
   const signin = trpc.signIn.useMutation();
   const trpcUtils = trpc.useUtils();
   const { alertElement, formik } = useForm<typeof signUpSchema>({
@@ -26,7 +24,6 @@ export const SigninPage = () => {
     onSubmit: async (values) => {
       await signin.mutateAsync(values);
       trpcUtils.invalidate();
-      navigate(routes.getAllIdeasRoute());
     },
     successMessage: 'Signed in successfully',
   });
@@ -46,3 +43,5 @@ export const SigninPage = () => {
     </Segment>
   );
 };
+
+export const SigninPage = withPageWrapper({ redirectAuthorized: true })(SigninPageInner);

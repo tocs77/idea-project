@@ -1,0 +1,15 @@
+@use '@/App/styles/vars' as colors;
+
+.ErrorMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .title {
+    font-weight: bold;
+  }
+
+  .message {
+    color: colors.$red;
+  }
+}

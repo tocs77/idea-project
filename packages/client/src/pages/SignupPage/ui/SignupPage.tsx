@@ -1,18 +1,14 @@
-import { routes, trpc } from '@/shared/lib';
-
-import { useNavigate } from 'react-router';
-
+import { trpc } from '@/shared/lib';
 import { Segment } from '@/shared/ui/Segment';
 import { FormItems } from '@/shared/ui/FormItems';
 import { Input } from '@/shared/ui/Input';
-
+import { withPageWrapper } from '@/features/PageWrapper';
 import { Button } from '@/shared/ui/Button';
 import { useForm } from '@/features/UseForm';
 
 import { signUpSchema } from '../model/types/SignupState';
 
-export const SignupPage = () => {
-  const navigate = useNavigate();
+const SignupPageInner = () => {
   const trpcUtils = trpc.useUtils();
   const signup = trpc.signUp.useMutation();
   const { alertElement, formik } = useForm<typeof signUpSchema>({
@@ -25,7 +21,6 @@ export const SignupPage = () => {
     onSubmit: async (values) => {
       await signup.mutateAsync(values);
       trpcUtils.invalidate();
-      navigate(routes.getAllIdeasRoute());
     },
     showValidationAlert: true,
   });
@@ -46,3 +41,5 @@ export const SignupPage = () => {
     </Segment>
   );
 };
+
+export const SignupPage = withPageWrapper({ redirectAuthorized: true })(SignupPageInner);

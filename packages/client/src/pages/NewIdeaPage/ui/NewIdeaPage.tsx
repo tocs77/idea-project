@@ -10,9 +10,11 @@ import { trpc } from '@/shared/lib';
 import { Button } from '@/shared/ui/Button';
 import { FormItems } from '@/shared/ui/FormItems';
 import { useForm } from '@/features/UseForm';
+import { withPageWrapper } from '@/features/PageWrapper';
 
 export type IdeaState = z.infer<typeof ideaSchema>;
-export const NewIdeaPage = () => {
+
+const NewIdeaPageInner = () => {
   const createIdea = trpc.createIdea.useMutation();
   const { alertElement, formik } = useForm<typeof ideaSchema>({
     initialValues: {
@@ -48,3 +50,7 @@ export const NewIdeaPage = () => {
     </Segment>
   );
 };
+
+export const NewIdeaPage = withPageWrapper({
+  authorizedOnly: true,
+})(NewIdeaPageInner);

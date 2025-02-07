@@ -9,11 +9,11 @@ export type AppContext = {
 const AppReactContext = createContext<AppContext>({ me: undefined });
 
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data, error, isLoading, isFetching, isError } = trpc.getMe.useQuery();
+  const { data, isLoading, isFetching } = trpc.getMe.useQuery();
 
   return (
     <AppReactContext.Provider value={{ me: data }}>
-      {isLoading || isFetching ? <p>Loading</p> : isError ? <p>{error.message}</p> : children}
+      {isLoading || isFetching ? <p>Loading</p> : children}
     </AppReactContext.Provider>
   );
 };

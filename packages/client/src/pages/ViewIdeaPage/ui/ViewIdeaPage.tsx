@@ -7,27 +7,26 @@ import { Segment } from '@/shared/ui/Segment';
 
 import classes from './ViewIdeaPage.module.scss';
 import { Button } from '@/shared/ui/Button';
-import { useMe } from '@/providers';
 
-export const ViewIdeaPage = () => {
-  const { ideaNick } = useParams() as ViewIdeaRouteParams;
-  const { data: idea, isLoading, isError, error } = trpc.getIdea.useQuery({ ideaNick });
-  const me = useMe();
+import { withPageWrapper } from '@/features/PageWrapper';
 
-  if (isLoading) return <div>Loading...</div>;
-
-  if (isError) return <div>{error.message}</div>;
-  if (!idea) return <div>Not found</div>;
-  return (
-    <Segment title={`Idea: ${idea.name}`} description={idea.description}>
-      <div className={classes.createdAt}>{`Created at: ${format(idea.createdAt, 'dd.MM.yyyy')}`}</div>
-      <div className={classes.author}>{`Author: ${idea.author.nick}`}</div>
-      <p className={classes.ideaText}>{idea.text}</p>
-      {me?.id === idea.authorId && (
-        <Link to={routes.getEditIdeaRoute({ ideaNick: idea.nick })} className={classes.edit}>
-          <Button>Edit</Button>
-        </Link>
-      )}
-    </Segment>
-  );
-};
+export const ViewIdeaPage = withPageWrapper({
+  useQuery: () => {
+    const { ideaNick } = useParams() as ViewIdeaRouteParams;
+    return trpc.getIdea.useQuery({ ideaNick });
+  },
+  checkExists: ({ queryResult }) => !!queryResult.data,
+  checkAccessMessage: 'Idea not found',
+  setProps: ({ queryResult, ctx }) => ({ idea: queryResult.data!, ctx }),
+})(({ idea, ctx }) => (
+  <Segment title={`Idea: ${idea.name}`} description={idea.description}>
+    <div className={classes.createdAt}>{`Created at: ${format(idea.createdAt, 'dd.MM.yyyy')}`}</div>
+    <div className={classes.author}>{`Author: ${idea.author.nick}`}</div>
+    <p className={classes.ideaText}>{idea.text}</p>
+    {ctx.me?.id === idea.authorId && (
+      <Link to={routes.getEditIdeaRoute({ ideaNick: idea.nick })} className={classes.edit}>
+        <Button>Edit</Button>
+      </Link>
+    )}
+  </Segment>
+));
