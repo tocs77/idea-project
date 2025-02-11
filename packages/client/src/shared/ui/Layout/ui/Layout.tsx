@@ -47,13 +47,22 @@ export const Layout = () => {
             </>
           )}
           {loggedIn && (
-            <li className={classes.item}>
-              <NavLink
-                to={routes.getSignOutRoute()}
-                className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
-                Sign Out
-              </NavLink>
-            </li>
+            <>
+              <li className={classes.item}>
+                <NavLink
+                  to={routes.getEditProfileRoute()}
+                  className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
+                  Edit Profile
+                </NavLink>
+              </li>
+              <li className={classes.item}>
+                <NavLink
+                  to={routes.getSignOutRoute()}
+                  className={({ isActive }) => classNames(classes.link, { [classes.active]: isActive })}>
+                  {`Sign Out (${me?.nick})`}
+                </NavLink>
+              </li>
+            </>
           )}
         </ul>
       </div>

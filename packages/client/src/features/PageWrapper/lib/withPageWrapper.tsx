@@ -8,6 +8,26 @@ import { useNavigate } from 'react-router';
 type Props = Record<string, any>;
 type QueryResult = UseTRPCQueryResult<any, any>;
 
+class CheckExistsError extends Error {}
+const checkExistsFn = <T,>(value: T, message?: string): NonNullable<T> => {
+  if (!value) {
+    throw new CheckExistsError(message);
+  }
+  return value;
+};
+
+class CheckAccessError extends Error {}
+const checkAccessFn = <T,>(value: T, message?: string): void => {
+  if (!value) {
+    throw new CheckAccessError(message);
+  }
+};
+
+type SetPropsProps<TQueryResult extends QueryResult | undefined> = HelperProps<TQueryResult> & {
+  checkExists: typeof checkExistsFn;
+  checkAccess: typeof checkAccessFn;
+};
+
 type QuerySuccessResult<TQueryResult extends QueryResult> = UseTRPCQuerySuccessResult<NonNullable<TQueryResult>['data'], null>;
 type HelperProps<TQueryResult extends QueryResult | undefined> = {
   ctx: AppContext;
@@ -29,7 +49,7 @@ type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | u
   checkExistsMessage?: string;
 
   useQuery?: () => TQueryResult;
-  setProps?: (helperProps: HelperProps<TQueryResult>) => TProps;
+  setProps?: (helperProps: SetPropsProps<TQueryResult>) => TProps;
   Page: React.FC<TProps>;
 };
 
@@ -83,14 +103,25 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
       return <ErrorMessage title={checkExistsTitle} message={checkExistsMessage} />;
     }
   }
-  const props = setProps?.(helperProp) as TProps;
-  return <Page {...props} />;
+  try {
+    const props = setProps?.({ ...helperProp, checkExists: checkExistsFn, checkAccess: checkAccessFn }) as TProps;
+    return <Page {...props} />;
+  } catch (error) {
+    if (error instanceof CheckExistsError) {
+      return <ErrorMessage title={checkExistsTitle} message={error.message || checkExistsMessage} />;
+    }
+    if (error instanceof CheckAccessError) {
+      return <ErrorMessage title={checkAccessTitle} message={error.message || checkAccessMessage} />;
+    }
+    throw error;
+  }
 };
 
 export const withPageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult | undefined = undefined>(
   pageWrapperProps: Omit<PageWrapperProps<TProps, TQueryResult>, 'Page'>,
 ) => {
   return (Page: PageWrapperProps<TProps, TQueryResult>['Page']) => {
+    console.log('withPageWrapper', pageWrapperProps.checkExistsMessage);
     return () => <PageWrapper {...pageWrapperProps} Page={Page} />;
   };
 };

@@ -12,6 +12,7 @@ export const getIdeaTrpcRoute = authedProcedure.input(z.object({ ideaNick: z.str
         select: {
           id: true,
           nick: true,
+          name: true,
         },
       },
     },

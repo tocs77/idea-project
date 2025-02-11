@@ -17,11 +17,14 @@ export const ViewIdeaPage = withPageWrapper({
   },
   checkExists: ({ queryResult }) => !!queryResult.data,
   checkAccessMessage: 'Idea not found',
-  setProps: ({ queryResult, ctx }) => ({ idea: queryResult.data!, ctx }),
+  setProps: ({ queryResult, ctx, checkExists }) => {
+    const idea = checkExists(queryResult.data, 'Idea not found');
+    return { idea, ctx };
+  },
 })(({ idea, ctx }) => (
   <Segment title={`Idea: ${idea.name}`} description={idea.description}>
     <div className={classes.createdAt}>{`Created at: ${format(idea.createdAt, 'dd.MM.yyyy')}`}</div>
-    <div className={classes.author}>{`Author: ${idea.author.nick}`}</div>
+    <div className={classes.author}>{`Author: ${idea.author.nick} - ${idea.author.name}`}</div>
     <p className={classes.ideaText}>{idea.text}</p>
     {ctx.me?.id === idea.authorId && (
       <Link to={routes.getEditIdeaRoute({ ideaNick: idea.nick })} className={classes.edit}>

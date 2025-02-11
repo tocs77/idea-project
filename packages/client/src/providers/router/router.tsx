@@ -9,6 +9,8 @@ import { SignupPage } from '@/pages/SignupPage';
 import { SigninPage } from '@/pages/SigninPage';
 import { SignOutPage } from '@/pages/SignOutPage';
 import { EditIdeaPage } from '@/pages/EditIdeaPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
+import { EditProfilePage } from '@/pages/EditPrifilePage';
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +30,9 @@ export const router = createBrowserRouter([
       { path: routes.getSignupRoute(), element: <SignupPage /> },
       { path: routes.getSigninRoute(), element: <SigninPage /> },
       { path: routes.getSignOutRoute(), element: <SignOutPage /> },
+      { path: routes.getEditProfileRoute(), element: <EditProfilePage /> },
+
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);

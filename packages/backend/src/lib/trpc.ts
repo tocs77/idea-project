@@ -2,7 +2,7 @@ import { initTRPC } from '@trpc/server';
 import superjson from 'superjson';
 import { AppContext } from './ctx';
 
-import { decodeJWT, verifyJWT } from '../utils/index';
+import { decodeJWT, verifyJWT, toClientMe } from '../utils';
 import { JwtPayload } from 'jsonwebtoken';
 
 const t = initTRPC.context<AppContext>().create({ transformer: superjson });
@@ -32,7 +32,7 @@ const authMiddleware = t.middleware(async ({ ctx, next }) => {
   }
 
   if (!user) return next();
-  ctx.me = { id: user.id, nick: user.nick };
+  ctx.me = toClientMe(user);
   return next();
 });
 export const publicProcedure = t.procedure;

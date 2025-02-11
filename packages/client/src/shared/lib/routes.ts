@@ -14,6 +14,7 @@ const getSignupRoute = () => '/sign-up';
 const getSigninRoute = () => '/sign-in';
 const getSignOutRoute = () => '/sign-out';
 const getEditIdeaRoute = ({ ideaNick }: ViewIdeaRouteParams) => `/ideas/${ideaNick}/edit`;
+const getEditProfileRoute = () => '/edit-profile';
 
 export const routes = {
   getAllIdeasRoute,
@@ -23,4 +24,5 @@ export const routes = {
   getSigninRoute,
   getSignOutRoute,
   getEditIdeaRoute,
+  getEditProfileRoute,
 };
