@@ -15,6 +15,7 @@ model Idea {
   text        String
   createdAt   DateTime @default(now())
   authorId    String
+  serialNumber Int      @unique @default(autoincrement())
 
   author User @relation(fields: [authorId], references: [id])
 }
