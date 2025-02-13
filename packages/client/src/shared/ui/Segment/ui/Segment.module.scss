@@ -17,4 +17,8 @@
   .content {
     margin-top: 12px;
   }
+
+  & + .Segment {
+    margin-top: 20px;
+  }
 }

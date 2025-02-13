@@ -7,6 +7,7 @@ import { Input } from '@/shared/ui/Input';
 import { Segment } from '@/shared/ui/Segment';
 import { TrpcRouterOutput } from '@idea/backend/src/router/router';
 import { updateProfileSchema } from '@idea/backend/src/types';
+import { PasswordChange } from '../PasswordChange/PasswordChange';
 
 const EditProfilePageContent = ({ me }: { me: NonNullable<TrpcRouterOutput['getMe']> }) => {
   const trpcUtils = trpc.useUtils();
@@ -25,21 +26,26 @@ const EditProfilePageContent = ({ me }: { me: NonNullable<TrpcRouterOutput['getM
 
   return (
     <Segment title='Edit Profile'>
-      <form onSubmit={formik.handleSubmit}>
-        <FormItems>
-          <Input label='Nick' name='nick' formik={formik} />
-          <Input label='Name' name='name' formik={formik} />
-          {alertElement}
-          <Button loading={formik.isSubmitting}>Update Profile</Button>
-        </FormItems>
-      </form>
+      <Segment size={2} title='Profile'>
+        <form onSubmit={formik.handleSubmit}>
+          <FormItems>
+            <Input label='Nick' name='nick' formik={formik} />
+            <Input label='Name' name='name' formik={formik} />
+            {alertElement}
+            <Button loading={formik.isSubmitting}>Update Profile</Button>
+          </FormItems>
+        </form>
+      </Segment>
+      <Segment size={2} title='Password'>
+        <PasswordChange />
+      </Segment>
     </Segment>
   );
 };
 
 export const EditProfilePage = withPageWrapper({
   authorizedOnly: true,
-  setProps: ({ ctx }) => {
-    return { ctx };
+  setProps: ({ getAuthorized }) => {
+    return { me: getAuthorized() };
   },
-})(({ ctx }) => <EditProfilePageContent me={ctx.me!} />);
+})(({ me }) => <EditProfilePageContent me={me} />);

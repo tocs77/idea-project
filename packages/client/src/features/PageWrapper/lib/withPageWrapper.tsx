@@ -23,9 +23,12 @@ const checkAccessFn = <T,>(value: T, message?: string): void => {
   }
 };
 
+class GetAuthorizedError extends Error {}
+
 type SetPropsProps<TQueryResult extends QueryResult | undefined> = HelperProps<TQueryResult> & {
   checkExists: typeof checkExistsFn;
   checkAccess: typeof checkAccessFn;
+  getAuthorized: (message?: string) => NonNullable<AppContext['me']>;
 };
 
 type QuerySuccessResult<TQueryResult extends QueryResult> = UseTRPCQuerySuccessResult<NonNullable<TQueryResult>['data'], null>;
@@ -103,8 +106,14 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
       return <ErrorMessage title={checkExistsTitle} message={checkExistsMessage} />;
     }
   }
+  const getAuthorized = (message?: string) => {
+    if (!ctx.me) {
+      throw new GetAuthorizedError(message);
+    }
+    return ctx.me;
+  };
   try {
-    const props = setProps?.({ ...helperProp, checkExists: checkExistsFn, checkAccess: checkAccessFn }) as TProps;
+    const props = setProps?.({ ...helperProp, checkExists: checkExistsFn, checkAccess: checkAccessFn, getAuthorized }) as TProps;
     return <Page {...props} />;
   } catch (error) {
     if (error instanceof CheckExistsError) {
@@ -112,6 +121,9 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
     }
     if (error instanceof CheckAccessError) {
       return <ErrorMessage title={checkAccessTitle} message={error.message || checkAccessMessage} />;
+    }
+    if (error instanceof GetAuthorizedError) {
+      return <ErrorMessage title={authorizedOnlyTitle} message={error.message || authorizedOnlyMessage} />;
     }
     throw error;
   }
@@ -121,7 +133,6 @@ export const withPageWrapper = <TProps extends Props = {}, TQueryResult extends 
   pageWrapperProps: Omit<PageWrapperProps<TProps, TQueryResult>, 'Page'>,
 ) => {
   return (Page: PageWrapperProps<TProps, TQueryResult>['Page']) => {
-    console.log('withPageWrapper', pageWrapperProps.checkExistsMessage);
     return () => <PageWrapper {...pageWrapperProps} Page={Page} />;
   };
 };
