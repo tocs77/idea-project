@@ -3,6 +3,7 @@ import { trpc } from '../lib';
 import { getIdeasTrpcRoute } from './idea/getIdeas';
 import { getIdeaTrpcRoute } from './idea/getIdea';
 import { createIdeaTrpcRoute } from './idea/createIdea';
+import { setIdeaLikeRoute } from './idea/setIdeaLike';
 import { signUpTrpcRoute } from './auth/signUp';
 import { signInTrpcRoute } from './auth/signin';
 import { getMe } from './auth/getMe';
@@ -22,6 +23,7 @@ export const trpcRouter = trpc.router({
   updateIdea: uodateIdeaTrpcRoute,
   updateProfile: updateProfileTrpcRoute,
   updatePassword: updatePasswordTrpcRoute,
+  setIdeaLike: setIdeaLikeRoute,
 });
 
 export type TrpcRouter = typeof trpcRouter;

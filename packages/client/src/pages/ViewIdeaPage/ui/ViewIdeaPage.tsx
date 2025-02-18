@@ -9,6 +9,7 @@ import classes from './ViewIdeaPage.module.scss';
 import { Button } from '@/shared/ui/Button';
 
 import { withPageWrapper } from '@/features/PageWrapper';
+import { LikesButton } from '@/features/LikesButton';
 
 export const ViewIdeaPage = withPageWrapper({
   useQuery: () => {
@@ -17,6 +18,7 @@ export const ViewIdeaPage = withPageWrapper({
   },
   checkExists: ({ queryResult }) => !!queryResult.data,
   checkAccessMessage: 'Idea not found',
+  showLOaderOnFetching: false,
   setProps: ({ queryResult, ctx, checkExists }) => {
     const idea = checkExists(queryResult.data, 'Idea not found');
     return { idea, ctx };
@@ -26,6 +28,14 @@ export const ViewIdeaPage = withPageWrapper({
     <div className={classes.createdAt}>{`Created at: ${format(idea.createdAt, 'dd.MM.yyyy')}`}</div>
     <div className={classes.author}>{`Author: ${idea.author.nick} - ${idea.author.name}`}</div>
     <p className={classes.ideaText}>{idea.text}</p>
+    <div className={classes.likes}>
+      Likes: {idea.likesCount}
+      {ctx.me && (
+        <>
+          <br /> <LikesButton idea={idea} />
+        </>
+      )}
+    </div>
     {ctx.me?.id === idea.authorId && (
       <Link to={routes.getEditIdeaRoute({ ideaNick: idea.nick })} className={classes.edit}>
         <Button>Edit</Button>
