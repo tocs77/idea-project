@@ -31,6 +31,7 @@ export const useForm = <TZodSchema extends z.ZodTypeAny>(props: UseFormProps<TZo
     initialValues: initialValues,
     validationSchema: toFormikValidationSchema(validationSchema),
     onSubmit: async (values, formikHelpers) => {
+      if (!onSubmit) return;
       setSubmittingError(null);
       try {
         await onSubmit?.(values, formikHelpers);

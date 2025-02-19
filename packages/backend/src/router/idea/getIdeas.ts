@@ -4,6 +4,7 @@ import { getIdeasSchema } from '../../types/zodScheas/getIdeasSchema';
 import { authedProcedure } from '../../lib';
 
 export const getIdeasTrpcRoute = authedProcedure.input(getIdeasSchema).query(async ({ ctx, input }) => {
+  const normalizedSearch = input.search ? input.search.trim().replace(/[\s\n\t]/g, '_') : undefined;
   const rawIdeas = await ctx.prisma.idea.findMany({
     select: {
       id: true,
@@ -17,6 +18,27 @@ export const getIdeasTrpcRoute = authedProcedure.input(getIdeasSchema).query(asy
         },
       },
     },
+    where: !normalizedSearch
+      ? undefined
+      : {
+          OR: [
+            {
+              name: {
+                search: normalizedSearch,
+              },
+            },
+            {
+              description: {
+                search: normalizedSearch,
+              },
+            },
+            {
+              text: {
+                search: normalizedSearch,
+              },
+            },
+          ],
+        },
     orderBy: [
       {
         createdAt: 'desc',

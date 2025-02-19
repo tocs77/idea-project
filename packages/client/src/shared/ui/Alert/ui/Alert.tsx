@@ -5,7 +5,7 @@ import classes from './Alert.module.scss';
 
 interface AlertProps {
   className?: string;
-  color: 'red' | 'green';
+  color: 'red' | 'green' | 'brown';
 }
 
 export const Alert = (props: PropsWithChildren<AlertProps>) => {
