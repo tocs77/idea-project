@@ -15,7 +15,6 @@
     "@types/react-infinite-scroller": "^1.2.5",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
-    "i": "^0.3.7",
     "include-media": "^2.0.0",
     "npm": "^11.0.0",
     "react": "19.0.0",

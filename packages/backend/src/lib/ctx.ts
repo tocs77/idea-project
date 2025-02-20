@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, UserPermissions } from '@prisma/client';
 import { Request, Response } from 'express';
 
 export const createAppContext = () => {
@@ -15,5 +15,5 @@ export const createAppContext = () => {
 export type AppContext = ReturnType<typeof createAppContext> & {
   req: Request;
   res: Response;
-  me?: { id: string; nick: string; name: string };
+  me?: { id: string; nick: string; name: string; permissions: UserPermissions[] };
 };

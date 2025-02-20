@@ -31,6 +31,9 @@ export const getIdeaTrpcRoute = authedProcedure.input(z.object({ ideaNick: z.str
       },
     },
   });
+  if (rawIdea?.blockedAt) {
+    throw new Error('Idea is blocked');
+  }
   const isLikedByMe = !!rawIdea?.ideasLikes?.length;
   const likesCount = rawIdea?._count?.ideasLikes || 0;
 

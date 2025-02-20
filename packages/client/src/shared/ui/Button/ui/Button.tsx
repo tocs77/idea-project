@@ -3,12 +3,13 @@ import classes from './Button.module.scss';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
+  color?: 'red' | 'green' | 'brown';
 }
 export const Button = (props: ButtonProps) => {
-  const { loading = false, children, className, ...rest } = props;
+  const { loading = false, children, className, color = 'green', ...rest } = props;
   return (
     <button
-      className={classNames(classes.Button, { [classes.loading]: loading }, [className])}
+      className={classNames(classes.Button, { [classes.loading]: loading, [classes[color]]: color }, [className])}
       {...rest}
       type='submit'
       disabled={loading}>

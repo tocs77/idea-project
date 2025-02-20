@@ -5,6 +5,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import { trpcRouter } from '@/router';
 import { createAppContext, AppContext } from './lib/ctx';
 import { env } from './lib/env';
+import { presetDb } from './scripts/presetDb';
 
 const init = async () => {
   let ctx: AppContext | null = null;
@@ -13,6 +14,7 @@ const init = async () => {
     if (ctx === null) {
       throw new Error('Failed to create app context');
     }
+    presetDb(ctx);
     const app = express();
     app.use(cookieParser());
 

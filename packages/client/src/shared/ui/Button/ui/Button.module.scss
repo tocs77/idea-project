@@ -3,20 +3,47 @@
 .Button {
   padding: 8px 15px;
   color: colors.$white;
-  background-color: #0a980a;
   border: none;
   font-weight: bold;
   border-radius: colors.$border-radius-small;
   cursor: pointer;
   user-select: none;
 
-  &:hover {
+  &.green { 
+    background-color: #0a980a;
+
+     &:hover {
     background-color: #21b821;
   }
 
   &:active {
     background-color: #39d039;
+  }}
+
+  &.red
+ 
+   {  background-color: #980a0a;
+    
+    &:hover {
+    background-color: #b82020;
   }
+
+  &:active {
+    background-color: #d03939;
+  }}
+
+  &.brown {  
+    background-color: #614f39;
+
+    &:hover {
+    background-color: #b8a38b;
+  }
+
+  &:active {
+    background-color: #d0c4c0;
+  }}
+
+
 
   &.loading {
     pointer-events: none;

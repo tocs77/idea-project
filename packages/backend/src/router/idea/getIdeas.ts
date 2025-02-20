@@ -18,27 +18,30 @@ export const getIdeasTrpcRoute = authedProcedure.input(getIdeasSchema).query(asy
         },
       },
     },
-    where: !normalizedSearch
-      ? undefined
-      : {
-          OR: [
-            {
-              name: {
-                search: normalizedSearch,
+    where: {
+      blockedAt: null,
+      ...(!normalizedSearch
+        ? {}
+        : {
+            OR: [
+              {
+                name: {
+                  search: normalizedSearch,
+                },
               },
-            },
-            {
-              description: {
-                search: normalizedSearch,
+              {
+                description: {
+                  search: normalizedSearch,
+                },
               },
-            },
-            {
-              text: {
-                search: normalizedSearch,
+              {
+                text: {
+                  search: normalizedSearch,
+                },
               },
-            },
-          ],
-        },
+            ],
+          }),
+    },
     orderBy: [
       {
         createdAt: 'desc',

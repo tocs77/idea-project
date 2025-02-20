@@ -10,6 +10,8 @@ import { Button } from '@/shared/ui/Button';
 
 import { withPageWrapper } from '@/features/PageWrapper';
 import { LikesButton } from '@/features/LikesButton';
+import { canBlockIdeas, canEditEdea } from '@idea/backend/src/utils/permissons';
+import { BlockIdea } from '@/features/BlockIdea';
 
 export const ViewIdeaPage = withPageWrapper({
   useQuery: () => {
@@ -36,10 +38,15 @@ export const ViewIdeaPage = withPageWrapper({
         </>
       )}
     </div>
-    {ctx.me?.id === idea.authorId && (
+    {canEditEdea(ctx.me, idea) && (
       <Link to={routes.getEditIdeaRoute({ ideaNick: idea.nick })} className={classes.edit}>
         <Button>Edit</Button>
       </Link>
+    )}
+    {canBlockIdeas(ctx.me) && (
+      <div className={classes.block}>
+        <BlockIdea idea={idea} />
+      </div>
     )}
   </Segment>
 ));
