@@ -1,0 +1,6 @@
+@use '@/App/styles/vars' as colors;
+
+.likeIcon{
+  cursor: pointer;
+  color: colors.$red
+}

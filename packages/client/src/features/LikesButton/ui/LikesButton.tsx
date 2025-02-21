@@ -1,6 +1,9 @@
 import { trpc } from '@/shared/lib';
-import { Button } from '@/shared/ui/Button';
+
+import { Icon } from '@/shared/ui/Icon';
 import { TrpcRouterOutput } from '@idea/backend/src/router/router';
+
+import classes from './LikesButton.module.scss';
 
 interface LikesButtonProps {
   idea: NonNullable<TrpcRouterOutput['getIdea']>;
@@ -41,5 +44,7 @@ export const LikesButton = (props: LikesButtonProps) => {
       isLikedByMe: !idea.isLikedByMe,
     });
   };
-  return <Button onClick={clickHandler}>{idea.isLikedByMe ? 'Unlike' : 'Like'}</Button>;
+  return (
+    <Icon name={idea.isLikedByMe ? 'likeFilled' : 'likeEmpty'} onClick={clickHandler} size={32} className={classes.likeIcon} />
+  );
 };
