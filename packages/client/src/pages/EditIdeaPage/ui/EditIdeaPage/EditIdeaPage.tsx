@@ -14,9 +14,12 @@ export const EditIdeaPage = withPageWrapper({
   checkAccessMessage: 'Idea not found',
   checkAccess: ({ queryResult, ctx }) => !!ctx.me && queryResult.data?.authorId === ctx.me.id,
   checkExistsMessage: 'An idea can be edited only by the author of the idea',
+
   setProps: ({ queryResult, ctx, checkAccess, checkExists }) => {
     const idea = checkExists(queryResult.data, 'Idea not found');
     checkAccess(idea.authorId === ctx?.me?.id, 'An idea can be edited only by the author of the idea');
     return { idea };
   },
+  title: ({ idea }) => `Edit idea: ${idea.nick}`,
+  isTitleExact: true,
 })(({ idea }) => <EditIdeaComponent idea={idea} />);

@@ -10,8 +10,9 @@ import { useRef } from 'react';
 import { useForm } from '@/features/UseForm';
 import { getIdeasSchema } from '@idea/backend/src/types';
 import { Input } from '@/shared/ui/Input';
+import { withPageWrapper } from '@/features/PageWrapper';
 
-export const AllIdeasPage = () => {
+const AllIdeasPageContent = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const { formik } = useForm({
     initialValues: {
@@ -62,3 +63,9 @@ export const AllIdeasPage = () => {
     </Segment>
   );
 };
+
+export const AllIdeasPage = withPageWrapper({
+  authorizedOnly: true,
+  title: 'All Ideas',
+  isTitleExact: true,
+})(AllIdeasPageContent);

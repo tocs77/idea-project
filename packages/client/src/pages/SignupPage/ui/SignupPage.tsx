@@ -42,4 +42,4 @@ const SignupPageInner = () => {
   );
 };
 
-export const SignupPage = withPageWrapper({ redirectAuthorized: true })(SignupPageInner);
+export const SignupPage = withPageWrapper({ redirectAuthorized: true, title: 'Sign up' })(SignupPageInner);

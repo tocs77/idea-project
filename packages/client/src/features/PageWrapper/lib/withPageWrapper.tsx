@@ -3,6 +3,7 @@ import { routes } from '@/shared/lib';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import { UseTRPCQueryResult, UseTRPCQuerySuccessResult } from '@trpc/react-query/dist/shared';
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router';
 
 type Props = Record<string, any>;
@@ -52,6 +53,8 @@ type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | u
   checkExistsMessage?: string;
 
   showLOaderOnFetching?: boolean;
+  title: string | ((titleProps: HelperProps<TQueryResult> & TProps) => string);
+  isTitleExact?: boolean;
 
   useQuery?: () => TQueryResult;
   setProps?: (helperProps: SetPropsProps<TQueryResult>) => TProps;
@@ -69,6 +72,9 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
   checkExists,
   checkExistsTitle = 'Page not found',
   checkExistsMessage = 'This page does not exist',
+
+  title,
+  isTitleExact = false,
   useQuery,
   setProps,
   showLOaderOnFetching = true,
@@ -117,7 +123,16 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
   };
   try {
     const props = setProps?.({ ...helperProp, checkExists: checkExistsFn, checkAccess: checkAccessFn, getAuthorized }) as TProps;
-    return <Page {...props} />;
+    const titleVal = typeof title === 'string' ? title : title({ ...helperProp, ...props });
+    const normalizedTitle = isTitleExact ? titleVal : `${titleVal} | IdeaNick`;
+    return (
+      <>
+        <Helmet>
+          <title>{normalizedTitle}</title>
+        </Helmet>
+        <Page {...props} />
+      </>
+    );
   } catch (error) {
     if (error instanceof CheckExistsError) {
       return <ErrorMessage title={checkExistsTitle} message={error.message || checkExistsMessage} />;

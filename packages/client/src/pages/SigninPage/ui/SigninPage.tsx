@@ -44,4 +44,4 @@ const SigninPageInner = () => {
   );
 };
 
-export const SigninPage = withPageWrapper({ redirectAuthorized: true })(SigninPageInner);
+export const SigninPage = withPageWrapper({ redirectAuthorized: true, title: 'Sign in' })(SigninPageInner);

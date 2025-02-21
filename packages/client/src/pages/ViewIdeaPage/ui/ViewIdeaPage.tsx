@@ -25,6 +25,7 @@ export const ViewIdeaPage = withPageWrapper({
     const idea = checkExists(queryResult.data, 'Idea not found');
     return { idea, ctx };
   },
+  title: ({ idea }) => `Idea: ${idea.name}`,
 })(({ idea, ctx }) => (
   <Segment title={`Idea: ${idea.name}`} description={idea.description}>
     <div className={classes.createdAt}>{`Created at: ${format(idea.createdAt, 'dd.MM.yyyy')}`}</div>

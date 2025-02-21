@@ -53,4 +53,5 @@ const NewIdeaPageInner = () => {
 
 export const NewIdeaPage = withPageWrapper({
   authorizedOnly: true,
+  title: 'New Idea',
 })(NewIdeaPageInner);

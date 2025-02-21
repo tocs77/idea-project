@@ -45,6 +45,7 @@ const EditProfilePageContent = ({ me }: { me: NonNullable<TrpcRouterOutput['getM
 
 export const EditProfilePage = withPageWrapper({
   authorizedOnly: true,
+  title: 'Edit Profile',
   setProps: ({ getAuthorized }) => {
     return { me: getAuthorized() };
   },
