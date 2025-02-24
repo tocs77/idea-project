@@ -14,6 +14,7 @@ const SignupPageInner = () => {
   const { alertElement, formik } = useForm<typeof signUpSchema>({
     initialValues: {
       nick: '',
+      email: '',
       password: '',
       passwordAgain: '',
     },
@@ -30,6 +31,7 @@ const SignupPageInner = () => {
       <form onSubmit={formik.handleSubmit}>
         <FormItems>
           <Input label='Nick' name={'nick'} formik={formik} />
+          <Input label='Email' name={'email'} formik={formik} />
           <Input label='Password' name={'password'} formik={formik} type='password' />
           <Input label='Password again' name={'passwordAgain'} formik={formik} type='password' />
           {alertElement}

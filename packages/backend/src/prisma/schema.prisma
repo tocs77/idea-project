@@ -27,6 +27,7 @@ model User {
   id          String            @id @default(uuid())
   nick        String            @unique
   name        String            @default("")
+  email       String            @unique
   password    String
   createdAt   DateTime          @default(now())
   ideas       Idea[]

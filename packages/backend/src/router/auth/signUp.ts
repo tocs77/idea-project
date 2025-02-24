@@ -14,10 +14,20 @@ export const signUpTrpcRoute = publicProcedure.input(signUpSchema).mutation(asyn
     throw new Error('User with this nick already exists');
   }
 
+  const emailUser = await ctx.prisma.user.findUnique({
+    where: {
+      email: input.email,
+    },
+  });
+  if (emailUser) {
+    throw new Error('User with this email already exists');
+  }
+
   const newUser = await ctx.prisma.user.create({
     data: {
       nick: input.nick,
       password: createHash('sha256').update(`${env.PASSWORD_SALT}${input.password}`).digest('hex'),
+      email: input.email,
     },
   });
   const token = signJWT(newUser.id);

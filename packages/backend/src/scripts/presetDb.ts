@@ -10,6 +10,7 @@ export const presetDb = async (ctx: AppContext) => {
     create: {
       nick: 'admin',
       name: 'admin',
+      email: 'admin@example.com',
       password: createHash('sha256').update(`${env.PASSWORD_SALT}${env.ADMIN_PASSWORD}`).digest('hex'),
       permissions: ['ALL'],
     },

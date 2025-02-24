@@ -18,6 +18,7 @@ const SigninPageInner = () => {
   const { alertElement, formik } = useForm<typeof signUpSchema>({
     initialValues: {
       nick: '',
+      email: '',
       password: '',
     },
     validationSchema: signUpSchema,

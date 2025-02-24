@@ -8,7 +8,7 @@ const hasPermission = (user: MaybeUser, permission: UserPermissions) => {
 };
 
 export const canBlockIdeas = (user: MaybeUser) => {
-  return hasPermission(user, 'BLOCK_IDEAS');
+  return hasPermission(user, 'BLOCK_IDEA');
 };
 
 export const canEditEdea = (user: MaybeUser, idea: MaybeIdea) => {
