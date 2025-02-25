@@ -8,3 +8,5 @@ export const signUpSchema = z.object({
   password: z.string({ required_error: 'Password is required' }).min(1, 'Password must be at least 1 character'),
   email: z.string({ required_error: 'Email is required' }).email('Invalid email'),
 });
+
+export const signinSchema = signUpSchema.omit({ email: true });

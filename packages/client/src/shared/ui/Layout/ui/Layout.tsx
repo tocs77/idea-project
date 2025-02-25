@@ -3,7 +3,7 @@ import { NavLink, Outlet } from 'react-router';
 import { classNames, routes } from '@/shared/lib';
 
 import classes from './Layout.module.scss';
-import { useMe } from '@/providers';
+import { useMe } from '../../../../providers/ctx/ctx';
 export const Layout = () => {
   const me = useMe();
   const loggedIn = !!me;

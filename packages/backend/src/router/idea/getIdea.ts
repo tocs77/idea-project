@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { omit } from 'lodash';
+import { sendWelcomeEmail } from '../../lib/emails';
 
 import { authedProcedure } from '../../lib';
 
@@ -42,5 +43,6 @@ export const getIdeaTrpcRoute = authedProcedure.input(z.object({ ideaNick: z.str
     isLikedByMe,
     likesCount,
   };
+  if (ctx.me) sendWelcomeEmail(ctx.me);
   return idea || null;
 });

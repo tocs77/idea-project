@@ -15,5 +15,5 @@ export const createAppContext = () => {
 export type AppContext = ReturnType<typeof createAppContext> & {
   req: Request;
   res: Response;
-  me?: { id: string; nick: string; name: string; permissions: UserPermissions[] };
+  me?: { id: string; nick: string; name: string; permissions: UserPermissions[]; email: string };
 };

@@ -13,19 +13,19 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "noEmit": true,
+    "noEmit": false,
     "noEmitOnError": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "skipLibCheck": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "baseUrl": ".",
-    "forceConsistentCasingInFileNames": false,
-    "paths": { "@/*": ["./src/*"] }
+    "forceConsistentCasingInFileNames": true,
+    "paths": { "@/*": ["./src/*"] },
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest", "src/setupTests.ts"],
-  "include": ["src/**/*", "src/assets/js/pdf.worker.min.js", "./config/jest/setupTests.ts"],
-  "types": ["typePatches"],
+  "include": ["src/**/*"],
   "ts-node": {
     "compilerOptions": { "module": "CommonJS" }
   }

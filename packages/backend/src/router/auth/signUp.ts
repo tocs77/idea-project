@@ -3,6 +3,7 @@ import { createHash } from 'crypto';
 import { signJWT } from '../../utils';
 import { signUpSchema } from '../../types';
 import { publicProcedure, env } from '../../lib';
+import { sendWelcomeEmail } from '../../lib/emails';
 
 export const signUpTrpcRoute = publicProcedure.input(signUpSchema).mutation(async ({ ctx, input }) => {
   const user = await ctx.prisma.user.findUnique({
@@ -32,5 +33,6 @@ export const signUpTrpcRoute = publicProcedure.input(signUpSchema).mutation(asyn
   });
   const token = signJWT(newUser.id);
   ctx.res.cookie('token', token, { httpOnly: true });
+  sendWelcomeEmail(newUser);
   return true;
 });

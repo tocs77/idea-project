@@ -17,6 +17,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "copy-files": "^0.1.0",
     "husky": "^9.1.7"
   }
 }
