@@ -25,7 +25,20 @@ services:
       - db  
     networks:
       - postgres_network
-
+        
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    ports:
+      - "1025:1025"  # SMTP port
+      - "4001:8025"  # Web UI port
+    networks:
+      - postgres_network
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "true"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "true"
+    # Make sure the container is accessible by hostname
+    hostname: mailpit
 
 volumes:
   postgres_data:  # Volume for PostgreSQL data persistence

@@ -5,11 +5,11 @@
   </mj-head>
   <mj-body mj-class="body">
     <mj-include path="./_header.mjml" />
-    <mj-section mj-class="content">
+    <mj-section mj-class="section">
       <mj-column>
         <mj-text mj-class="h1">Thanks for registering {{userNick}}!</mj-text>
         <mj-text mj-class="text"> Publish your first idea: </mj-text>
-        <mj-button mj-class="button" href="{{ads.addIdeaUrl}}"> Add idea </mj-button>
+        <mj-button mj-class="button" href="{{addIdeaUrl}}"> Add idea </mj-button>
       </mj-column>
     </mj-section>
     <mj-include path="./_footer.mjml" />

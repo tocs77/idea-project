@@ -3,13 +3,13 @@
     <mj-title>Your Idea Has Been Blocked</mj-title>
     <mj-include path="./_head.mjml" />
   </mj-head>
-  <mj-body mj-class="body"/>
-    <mj-include path="./_header.mjml" />
+  <mj-body mj-class="body">
+     <mj-include path="./_header.mjml" />
     <mj-section mj-class="section">
       <mj-column>
-      <mj-text mj-class="h1" align="center">Your Idea Has Been Blocked</mj-text>
-      <mj-text mj-class="text" align="center">
-        Dear {{userName}},
+        <mj-text mj-class="h1" align="center">Your Idea Has Been Blocked</mj-text>
+        <mj-text mj-class="text" align="center">
+        Dear {{userNick}},
       </mj-text>
       <mj-text mj-class="text" align="center">
         We regret to inform you that your idea "{{ideaNick}}" has been blocked due to a violation of our community guidelines.
