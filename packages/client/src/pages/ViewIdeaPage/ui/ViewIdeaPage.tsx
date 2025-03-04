@@ -1,8 +1,8 @@
-import { Link, useParams } from 'react-router';
+import { Link } from 'react-router';
 import { format } from 'date-fns';
 
 import { trpc } from '@/shared/lib';
-import { routes, ViewIdeaRouteParams } from '@/shared/lib/routes';
+import { routes } from '@/shared/lib/routes';
 import { Segment } from '@/shared/ui/Segment';
 
 import classes from './ViewIdeaPage.module.scss';
@@ -15,7 +15,7 @@ import { BlockIdea } from '@/features/BlockIdea';
 
 export const ViewIdeaPage = withPageWrapper({
   useQuery: () => {
-    const { ideaNick } = useParams() as ViewIdeaRouteParams;
+    const { ideaNick } = routes.getViewIdeaRoute.useParams();
     return trpc.getIdea.useQuery({ ideaNick });
   },
   checkExists: ({ queryResult }) => !!queryResult.data,

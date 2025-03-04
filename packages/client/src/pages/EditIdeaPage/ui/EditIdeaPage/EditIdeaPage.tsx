@@ -1,13 +1,12 @@
 import { trpc } from '@/shared/lib';
-import { ViewIdeaRouteParams } from '@/shared/lib/routes';
-import { useParams } from 'react-router';
+import { routes } from '@/shared/lib/routes';
 import { EditIdeaComponent } from '../EditIdeaComponent/EditIdeaComponent';
 import { withPageWrapper } from '@/features/PageWrapper';
 
 export const EditIdeaPage = withPageWrapper({
   authorizedOnly: true,
   useQuery: () => {
-    const { ideaNick } = useParams() as ViewIdeaRouteParams;
+    const { ideaNick } = routes.getViewIdeaRoute.useParams();
     return trpc.getIdea.useQuery({ ideaNick });
   },
   checkExists: ({ queryResult }) => !!queryResult.data,

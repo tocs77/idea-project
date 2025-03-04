@@ -16,10 +16,10 @@ export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: routes.getAllIdeasRoute(), element: <AllIdeasPage /> },
-      { path: routes.getNewIdeaRoute(), element: <NewIdeaPage /> },
+      { path: routes.getAllIdeasRoute.definition, element: <AllIdeasPage /> },
+      { path: routes.getNewIdeaRoute.definition, element: <NewIdeaPage /> },
       {
-        path: routes.getViewIdeaRoute({ ideaNick: ':ideaNick' }),
+        path: routes.getViewIdeaRoute.definition,
 
         children: [
           { index: true, element: <ViewIdeaPage /> },
@@ -27,10 +27,10 @@ export const router = createBrowserRouter([
         ],
       },
 
-      { path: routes.getSignupRoute(), element: <SignupPage /> },
-      { path: routes.getSigninRoute(), element: <SigninPage /> },
-      { path: routes.getSignOutRoute(), element: <SignOutPage /> },
-      { path: routes.getEditProfileRoute(), element: <EditProfilePage /> },
+      { path: routes.getSignupRoute.definition, element: <SignupPage /> },
+      { path: routes.getSigninRoute.definition, element: <SigninPage /> },
+      { path: routes.getSignOutRoute.definition, element: <SignOutPage /> },
+      { path: routes.getEditProfileRoute.definition, element: <EditProfilePage /> },
 
       { path: '*', element: <NotFoundPage /> },
     ],

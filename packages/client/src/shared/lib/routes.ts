@@ -1,20 +1,15 @@
-const getRouteParams = <T extends Record<string, boolean>>(object: T) => {
-  return Object.keys(object).reduce((acc, key) => ({ ...acc, [key]: `:${key}` }), {}) as Record<keyof T, string>;
-};
+import { pgr } from './pumpGetRoute';
 
-const getAllIdeasRoute = () => '/';
+const getAllIdeasRoute = pgr(() => '/');
 
-export const viewIdeaRouteParams = getRouteParams({ ideaNick: true });
-export type ViewIdeaRouteParams = typeof viewIdeaRouteParams;
+const getViewIdeaRoute = pgr({ ideaNick: true }, ({ ideaNick }) => `/ideas/${ideaNick}`);
+const getNewIdeaRoute = pgr(() => '/ideas/new');
 
-const getViewIdeaRoute = ({ ideaNick }: ViewIdeaRouteParams) => `/ideas/${ideaNick}`;
-const getNewIdeaRoute = () => '/ideas/new';
-
-const getSignupRoute = () => '/sign-up';
-const getSigninRoute = () => '/sign-in';
-const getSignOutRoute = () => '/sign-out';
-const getEditIdeaRoute = ({ ideaNick }: ViewIdeaRouteParams) => `/ideas/${ideaNick}/edit`;
-const getEditProfileRoute = () => '/edit-profile';
+const getSignupRoute = pgr(() => '/sign-up');
+const getSigninRoute = pgr(() => '/sign-in');
+const getSignOutRoute = pgr(() => '/sign-out');
+const getEditIdeaRoute = pgr({ ideaNick: true }, ({ ideaNick }) => `/ideas/${ideaNick}/edit`);
+const getEditProfileRoute = pgr(() => '/edit-profile');
 
 export const routes = {
   getAllIdeasRoute,
