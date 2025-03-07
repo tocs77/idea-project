@@ -7,6 +7,7 @@ import { createAppContext, AppContext } from './lib/ctx';
 import { env } from './lib/env';
 import { presetDb } from './scripts/presetDb';
 import { applyCron } from './lib/cron';
+import { logger } from './lib/logger';
 
 const init = async () => {
   let ctx: AppContext | null = null;
@@ -29,11 +30,11 @@ const init = async () => {
     );
 
     app.listen(env.PORT, () => {
-      console.log(`Server started on port ${env.PORT}`);
+      logger.info('Server', `Server started on port ${env.PORT}`);
     });
   } catch (error) {
     await ctx?.stop();
-    console.error('Failed to start server', error);
+    logger.error('Server', error);
     process.exit(1);
   }
 };

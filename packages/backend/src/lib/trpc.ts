@@ -4,6 +4,7 @@ import { AppContext } from './ctx';
 
 import { decodeJWT, verifyJWT, toClientMe } from '../utils';
 import { JwtPayload } from 'jsonwebtoken';
+import { logger } from './logger';
 
 const t = initTRPC.context<AppContext>().create({ transformer: superjson });
 
@@ -35,6 +36,26 @@ const authMiddleware = t.middleware(async ({ ctx, next }) => {
   ctx.me = toClientMe(user);
   return next();
 });
-export const publicProcedure = t.procedure;
+
+const loggerMiddleware = t.middleware(async ({ path, type, next, ctx, rawInput }) => {
+  const start = Date.now();
+  const result = await next();
+  const duration = Date.now() - start;
+  const meta = {
+    path,
+    type,
+    userId: ctx.me?.id,
+    duration,
+    rawInput: rawInput || null,
+  };
+  if (result.ok) {
+    logger.info(`trpc:${type}: success`, 'Successfully request', { ...meta, output: result.data });
+  } else {
+    logger.error(`trpc:${type}: error`, result.error, meta);
+  }
+  return result;
+});
+
+export const publicProcedure = t.procedure.use(loggerMiddleware);
 export const authedProcedure = publicProcedure.use(authMiddleware);
 export const trpc = t;

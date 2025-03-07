@@ -1,0 +1,21 @@
+<mjml>
+  <mj-head>
+    <mj-title>Most liked ideas</mj-title>
+    <mj-include path="./_head.mjml" />
+  </mj-head>
+  <mj-body mj-class="body">
+    <mj-include path="./_header.mjml" />
+    <mj-section mj-class="section">
+      <mj-column>
+        <mj-text mj-class="h1" align="center">Hello {{userNick}}</mj-text>
+        <mj-text mj-class="text" align="center"> Here are the most liked ideas this month: </mj-text>
+        <mj-text mj-class="text" align="center">
+          {{#each ideas}}
+          <a href="{{url}}">{{name}}</a>
+          {{/each}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./_footer.mjml" />
+  </mj-body>
+</mjml>

@@ -8,6 +8,7 @@ import handlebars, { TemplateDelegate } from 'handlebars';
 import { Idea, User } from '@prisma/client';
 
 import { env } from './env';
+import { logger } from './logger';
 
 const getHandlebarsTemplates = memoize(async () => {
   const pathes: string[] = [];
@@ -21,7 +22,7 @@ const getHandlebarsTemplates = memoize(async () => {
       pathes.push(path.resolve(emailsDistDir, simpleHtmlPath));
     }
   } catch (error) {
-    console.error(`Error checking directory contents: ${error}`);
+    logger.error('Email', error);
   }
 
   const hbrTemplates: Record<string, TemplateDelegate> = {};
@@ -70,13 +71,10 @@ const sendEmail = async ({ to, subject, templateName, templateVariables }: Email
       html,
     });
 
-    console.info(`Email sent: ${info.messageId}`);
-
-    // console.info(`Sending email to ${to} with subject ${subject}`);
-    // console.info(`HTML template: ${html}`);
+    logger.info('Email', `Email sent: ${info.messageId}`);
     return true;
   } catch (error) {
-    console.error(`Failed to send email: ${error}`);
+    logger.error('Email', error);
     return false;
   }
 };
@@ -101,6 +99,21 @@ export const sendIdeaBlockedEmail = async (user: Pick<User, 'nick' | 'email'>, i
     templateVariables: {
       ideaNick: idea.nick,
       userNick: user.nick,
+    },
+  });
+};
+
+export const sendMostLikedIdeasEmail = async (user: Pick<User, 'nick' | 'email'>, ideas: Pick<Idea, 'nick' | 'name'>[]) => {
+  return await sendEmail({
+    to: user.email,
+    subject: 'Most liked ideas!',
+    templateName: 'mostLikedIdeas',
+    templateVariables: {
+      ideas: ideas.map((idea) => ({
+        userNick: user.nick,
+        name: idea.name,
+        url: `${env.WEBAPP_URL}/ideas/${idea.nick}`,
+      })),
     },
   });
 };

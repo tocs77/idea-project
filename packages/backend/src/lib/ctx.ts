@@ -1,8 +1,9 @@
-import { PrismaClient, UserPermissions } from '@prisma/client';
+import { UserPermissions } from '@prisma/client';
 import { Request, Response } from 'express';
+import { createPrismaClient } from './prisma';
 
 export const createAppContext = () => {
-  const prisma = new PrismaClient();
+  const prisma = createPrismaClient();
 
   return {
     prisma,
