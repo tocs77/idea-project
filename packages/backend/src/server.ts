@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import * as trpcExpress from '@trpc/server/adapters/express';
 
@@ -28,6 +28,14 @@ const init = async () => {
         createContext: ({ req, res }) => ({ req, res, ...ctx }) as AppContext,
       }),
     );
+
+    app.use((err: any, _: Request, res: Response, next: NextFunction) => {
+      if (res.headersSent) {
+        return next(err);
+      }
+      logger.error('express', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    });
 
     app.listen(env.PORT, () => {
       logger.info('Server', `Server started on port ${env.PORT}`);

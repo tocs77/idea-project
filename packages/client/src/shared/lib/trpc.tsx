@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import superjson from 'superjson';
-import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
+import { createTRPCReact, httpBatchLink, loggerLink } from '@trpc/react-query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { TrpcRouter } from '@idea/backend/src/router';
@@ -18,6 +18,7 @@ const queryClient = new QueryClient({
 const trpcClient = trpc.createClient({
   transformer: superjson,
   links: [
+    loggerLink({ enabled: () => process.env.NODE_ENV === 'development' }),
     httpBatchLink({
       url: '/trpc',
     }),
