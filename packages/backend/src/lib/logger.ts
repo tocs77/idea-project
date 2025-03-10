@@ -1,6 +1,18 @@
 import winston from 'winston';
 import { env } from './env';
 import { serializeError } from 'serialize-error';
+import { deepMap } from '../utils/deepMap';
+
+type Meta = Record<string, any> | undefined;
+
+const prettifyMeta = (meta: Meta): string => {
+  return deepMap(meta, ({ key, value }) => {
+    if (['email', 'password', 'newPassword', 'oldPassword', 'passwordAgain', 'token', 'text', 'description'].includes(key)) {
+      return '***';
+    }
+    return value;
+  });
+};
 
 const enableDebug = (namespace: string): boolean => {
   // This implements a simple pattern matching similar to the debug package
@@ -58,18 +70,20 @@ const directLog = (namespace: string, message: string) => {
 };
 
 export const logger = {
-  info: (logType: string, message: string, meta?: Record<string, any>) => {
+  info: (logType: string, message: string, meta?: Meta) => {
     const fullNamespace = `ideanick:${logType}`;
 
+    const prettifiedMeta = prettifyMeta(meta) || {};
+
     // Try our direct logging approach first
-    const logged = directLog(fullNamespace, `${message} ${meta ? JSON.stringify(meta) : ''}`);
+    const logged = directLog(fullNamespace, `${message} ${prettifiedMeta ? JSON.stringify(prettifiedMeta) : ''}`);
 
     // If direct logging worked, also log to winston
     if (logged) {
-      winstonLogger.info(message, { logType, ...meta });
+      winstonLogger.info(message, { logType, ...prettifiedMeta });
     }
   },
-  error: (logType: string, error: any, meta?: Record<string, any>) => {
+  error: (logType: string, error: any, meta?: Meta) => {
     const fullNamespace = `ideanick:${logType}`;
 
     const serializedError = serializeError(error);
@@ -77,6 +91,7 @@ export const logger = {
 
     // Try our direct logging approach first
     const logged = directLog(fullNamespace, errorMessage);
+    const prettifiedMeta = prettifyMeta(meta) || {};
 
     // If direct logging worked, also log to winston
     if (logged) {
@@ -84,7 +99,7 @@ export const logger = {
         logType,
         error,
         errorStack: serializedError.stack,
-        ...meta,
+        ...prettifiedMeta,
       });
     }
   },
