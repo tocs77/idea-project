@@ -10,13 +10,15 @@ const recursion = ({
   pathStartsWith,
   parentKey,
 }: { input: Value; replaceFn: ReplaceFn; seen: WeakSet<any>; pathStartsWith: string; parentKey: string }): Value => {
-  if (['function', 'symbol', 'function'].includes(typeof input) && input !== null) {
+  // Check for circular references for objects and arrays
+  if (input !== null && typeof input === 'object') {
     if (seen.has(input)) {
+      // Return a placeholder for circular references
       return '!!!Circular Reference!!!';
-    } else {
-      seen.add(input);
     }
+    seen.add(input);
   }
+
   const result = replaceFn({ path: pathStartsWith.replace(/\.$/, ''), key: parentKey, value: input });
   if (!result) return result;
 
@@ -25,7 +27,7 @@ const recursion = ({
       recursion({
         input: item,
         replaceFn,
-        seen,
+        seen, // Use the same WeakSet to track all objects
         pathStartsWith: `${pathStartsWith}[${index}]`,
         parentKey: index.toString(),
       }),
@@ -35,7 +37,13 @@ const recursion = ({
     return Object.fromEntries(
       Object.entries(result).map(([key, value]) => [
         key,
-        recursion({ input: value, replaceFn, seen, pathStartsWith: `${pathStartsWith}.${key}`, parentKey: key }),
+        recursion({
+          input: value,
+          replaceFn,
+          seen, // Use the same WeakSet to track all objects
+          pathStartsWith: `${pathStartsWith}.${key}`,
+          parentKey: key,
+        }),
       ]),
     );
   }
